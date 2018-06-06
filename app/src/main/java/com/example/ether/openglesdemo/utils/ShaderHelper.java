@@ -35,7 +35,7 @@ public class ShaderHelper {
     }
 
     private static int compileShader(int type, String shader) {
-        int shaderObjectId = glCreateShader(type);
+        final int shaderObjectId = glCreateShader(type);
         if (shaderObjectId == 0) {
             Log.e(TAG, "compileShader: 创建shader容器失败");
             return 0;
@@ -82,4 +82,12 @@ public class ShaderHelper {
         return validateStatus[0] != 0;
     }
 
+    public static int buildProgram(String vertexShaderSource, String fragmentShaderSource) {
+        int program;
+        int vertexShader = compileVertexShader(vertexShaderSource);
+        int fragmentShader = compileFragmentShader(fragmentShaderSource);
+        program = linkProgram(vertexShader, fragmentShader);
+        validateProgram(program);
+        return program;
+    }
 }
